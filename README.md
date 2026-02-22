@@ -18,6 +18,8 @@ Currently focused on data cleaning and preprocessing.
 - Python
 - Pandas
 - NumPy
+- Matplotlib
+- seaborn
 
 ## Phase 2: Exploratory Data Analysis (EDA) Insights
 
@@ -49,6 +51,28 @@ Currently focused on data cleaning and preprocessing.
 - From **July to November**, revenue steadily rose, peaking in November.
 - This indicates **high seasonal demand** during these months.
 - Supply and inventory planning should be prioritized in this period to meet demand efficiently.
+
+### TotalPrice Distribution (Box Plot)
+- The majority of transactions fall within a low to moderate TotalPrice range.
+- The distribution is right-skewed with several high-value outliers.
+- Negative TotalPrice values indicate returns or cancelled transactions.
+
+### Transaction Value Insights
+- The middle 50% of transactions fall approximately between $5 and $18, indicating typical purchase values.
+- Higher-value transactions extend up to around $38, representing the upper spending range.
+- Negative TotalPrice values (−1 to −18) indicate returned or cancelled orders.
+- Low-value purchases ($0–$4) are also common, suggesting frequent small-item transactions.
+
+### Overall Quantity Distribution
+- Most transactions have positive quantities, indicating successful sales.
+- Returns (negative quantities) are present but form a very small portion of the data.
+- Large return quantities are rare, suggesting returns have minimal impact on overall sale.
+- X-axis represents the quantity of items per transaction.
+- Y-axis represents the frequency of transactions.
+- Most transactions involve small positive quantities, while returns are infrequent.
+
+
+### The business operates on high-volume, low-price sales with occasional bulk orders.Returns exist but do not dominate transaction behavior.
 
 ## Next Steps
 - Customer segmentation using RFM analysis and clustering.  
