@@ -117,6 +117,14 @@ Segmentation is based on combined RFM score patterns.
 
 ---
 
+### Phase 4: Customer Clustering (Unsupervised Learning)
+- Standardize RFM features
+- Determine optimal clusters using Elbow Method
+- Apply KMeans clustering
+- Profile clusters and validate against rule-based segments
+
+--- 
+
 ## Key Business Insights
 - Revenue is driven by a small group of high-value customers
 - Recent customers often start with low monetary value
@@ -135,7 +143,7 @@ Segmentation is based on combined RFM score patterns.
 ---
 
 ## Future Improvements
-- Cluster-based segmentation
+- Return-heavy customer risk analysis
 - Churn prediction modeling
-- Segment-level return analysis
-- Marketing strategy optimization
+- Advanced clustering (DBSCAN / Hierarchical)
+- Interactive dashboard for business users
