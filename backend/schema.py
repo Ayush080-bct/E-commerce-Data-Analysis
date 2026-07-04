@@ -1,6 +1,17 @@
 from pydantic import BaseModel
 
 
+class PredictRequest(BaseModel):
+    recency: float
+    frequency: float
+    monetary: float
+ 
+ 
+class PredictResponse(BaseModel):
+    cluster: int
+    segment: str
+ 
+ 
 class CustomerResponse(BaseModel):
     CustomerID: str
     Recency: float
