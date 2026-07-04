@@ -2,17 +2,12 @@
 Customer segementation API 
 """
 
-from pathlib import Path
-import pandas as pd
+
+
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_PATH = BASE_DIR / "data" / "processed" / "rfm.csv"
-SCALER_PATh = BASE_DIR / "models" / "scaler.pkl"
-KMEANS_PATH = BASE_DIR / "models" / "kmeans.pkl"
 
 app = FastAPI(title="Customer Segementation API",version="1.0.0")
 
@@ -37,3 +32,17 @@ _seg_map: dict | None = None
 def root():
     data = {"messgae":"Backend run sucessfully","status":"ok"}
     return JSONResponse(content=data,status_code=200)
+
+def _load_everything():
+    global _rfm , _scaler,_kmeans,_seg_map
+
+    if not os.path.exists(DATA_PATH):
+        raise FileNotFoundError(f"Missing data file : {DATA_PATH}")
+    if not os.path.exists(SCALER_PATh) and not os.path.exists(KMEANS_PATH):
+        raise FileNotFoundError(
+            "Missing model files in model/. RUn the clustering notebook "
+            "and joblib.dump the scaler + kmeans model first"
+        )
+    df =pd.read_csv(DATA_PATH)
+    scaler = joblib.load(SCALER_PATh)
+    kmeans = joblib.load(KMEANS_PATH)
