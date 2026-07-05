@@ -40,7 +40,7 @@ class DataStore:
         self.segment_map = segment_map
 
     @property
-    def is_load(self) -> bool:
+    def is_loaded(self) -> bool:
         return self.rfm is not None
     
 store= DataStore()
