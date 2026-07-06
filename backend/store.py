@@ -1,7 +1,7 @@
 import os
 import joblib
 import pandas as pd
-from backend.config import DATA_PATH,KMEANS_PATH,SCALER_PATH
+from config import DATA_PATH,KMEANS_PATH,SCALER_PATH
 
 class DataStore:
     "holds the rfm dataframe (with cluster  labels attached) plus the trained Scaler/Kmeans model, loaded once at api startup"
