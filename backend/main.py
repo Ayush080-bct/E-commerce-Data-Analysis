@@ -6,8 +6,9 @@ Customer segementation API
 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
 
+from routes import router
+from store import store
 
 app = FastAPI(title="Customer Segementation API",version="1.0.0")
 
@@ -22,27 +23,8 @@ app.add_middleware(
     allow_headers=["*"],            # or specify headers if needed
 )
 
-# type hints
-_rfm: pd.DataFrame | None=None
-_scaler = None
-_kmeans = None
-_seg_map: dict | None = None
+app.include_router(router)
 
-@app.get('/')
-def root():
-    data = {"messgae":"Backend run sucessfully","status":"ok"}
-    return JSONResponse(content=data,status_code=200)
-
-def _load_everything():
-    global _rfm , _scaler,_kmeans,_seg_map
-
-    if not os.path.exists(DATA_PATH):
-        raise FileNotFoundError(f"Missing data file : {DATA_PATH}")
-    if not os.path.exists(SCALER_PATh) and not os.path.exists(KMEANS_PATH):
-        raise FileNotFoundError(
-            "Missing model files in model/. RUn the clustering notebook "
-            "and joblib.dump the scaler + kmeans model first"
-        )
-    df =pd.read_csv(DATA_PATH)
-    scaler = joblib.load(SCALER_PATh)
-    kmeans = joblib.load(KMEANS_PATH)
+@app.on_event("startup")
+def startup():
+    store.load()
