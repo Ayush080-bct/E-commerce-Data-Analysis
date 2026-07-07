@@ -41,4 +41,7 @@ def overview(store : DataStore = Depends(get_store)):#FastAPI will automatically
         revenue_by_segment=revenue_by_segment,
         summary=summary,
     )
- 
+@router.get("/cluster/scatter")
+def cluster_scatter(store : DataStore = Depends(get_store)):
+    df = store.rfm[["CustomerID","Recency","Frequency","Monetory","Cluster","segment"]]
+    return df.to_dict(orient="records")
