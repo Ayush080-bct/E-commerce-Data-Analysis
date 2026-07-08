@@ -26,7 +26,7 @@ def overview(store : DataStore = Depends(get_store)):#FastAPI will automatically
             Customers=("CustomerID", "count"),
             Avg_Recency=("Recency", "mean"),
             Avg_Frequency=("Frequency", "mean"),
-            Avg_Monetary=("Monetory", "mean"),
+            Avg_Monetory=("Monetory", "mean"),
         )
         .round(1)
         .reset_index()
@@ -49,3 +49,21 @@ def cluster_scatter(store : DataStore = Depends(get_store)):
 def list_customers(store:DataStore=Depends(get_store)):
     return sorted(store.rfm["CustomerID"].astype(str).tolist())
 
+
+@router.get("/customers/{customer_id}",response_model=CustomerResponse)
+def get_customer(customer_id:str,store : DataStore = Depends(get_store)):
+    df=store.rfm
+    match = df[df["CustomerID"].astype(str) == str(customer_id)]
+    if match.empty:
+        return HTTPException(status_code=404, detail="Customer Not found")
+    row = match.iloc[0]
+    return CustomerResponse(
+        CustomerID=str(row["CustomerID"]),
+        Recency=float(row["Recency"]),
+        Frequency=float(row["Frequency"]),
+        Monetory=float(row["Monetory"]),
+        RFM_score=str(row["RFM_score"]),
+        segment=str(row["segment"]),
+        cluster=int(row["Cluster"]),
+        cluster_typical_segment=store.segment_map[int(row["Cluster"])]
+    )
