@@ -67,3 +67,13 @@ def get_customer(customer_id:str,store : DataStore = Depends(get_store)):
         cluster=int(row["Cluster"]),
         cluster_typical_segment=store.segment_map[int(row["Cluster"])]
     )
+@router.post("/predict",response_model=PredictResponse)
+def predict(payload: PredictRequest, store: DataStore=Depends(get_store)):
+    new_point = pd.DataFrame(
+        [[payload.recency,payload.frequency,payload.monetory]],
+        columns=["Recency","Frequency","Monetory"]
+    )
+    scaled = store.scaler.transform(new_point)
+    cluster = int(store.kmeans.predict(scaled)[0])
+    segment = store.segment_map[cluster]
+    return PredictResponse(cluster=cluster, segment=segment)

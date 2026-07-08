@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class PredictRequest(BaseModel):
     recency: float
     frequency: float
-    monetary: float
+    monetory: float
  
  
 class PredictResponse(BaseModel):

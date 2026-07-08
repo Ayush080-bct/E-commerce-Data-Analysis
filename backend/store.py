@@ -43,7 +43,7 @@ class DataStore:
     def is_loaded(self) -> bool:
         return self.rfm is not None
     
-store= DataStore()
+store = DataStore()
 
 def get_store() -> DataStore:
     """Fastapi dependency - lets route function declare `store: DataStore = Depends(get_store)`."""
