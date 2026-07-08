@@ -16,7 +16,7 @@ class CustomerResponse(BaseModel):
     CustomerID: str
     Recency: float
     Frequency: float
-    Monetary: float
+    Monetory: float
     RFM_score: str
     segment: str
     cluster: int
