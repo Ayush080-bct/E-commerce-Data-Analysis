@@ -45,3 +45,7 @@ def overview(store : DataStore = Depends(get_store)):#FastAPI will automatically
 def cluster_scatter(store : DataStore = Depends(get_store)):
     df = store.rfm[["CustomerID","Recency","Frequency","Monetory","Cluster","segment"]]
     return df.to_dict(orient="records")
+@router.get("/customers")
+def list_customers(store:DataStore=Depends(get_store)):
+    return sorted(store.rfm["CustomerID"].astype(str).tolist())
+
