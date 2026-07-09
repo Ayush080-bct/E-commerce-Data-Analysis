@@ -27,3 +27,22 @@ def _post(path:str,json_body:dict):
 # request logic, error handling, and JSON parsing. Streamlit pages import
 # this module to fetch/submit data without duplicating request code.
 
+def check_backend_alive()->bool:
+    try:
+        _get("/health")
+        return True
+    except requests.exceptions.RequestException:
+        return False
+
+def require_backend():
+    """
+    Call at the top of the every page. Stops the page with clear error if backend isnot reachable, instead of letting
+    requests fail deep inside the page logic."""
+    if not check_backend_alive:
+        st.error(
+            f"can't reach the backend API at `{API_BASE_URL}`.\n\n"\
+            "start it first with:\n\n"
+            "```bash\nuvicorn backend.main:app --reload\n```\n\n"
+            "then Reload this page"
+            )
+        st.stop()
