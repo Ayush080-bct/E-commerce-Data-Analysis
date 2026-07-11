@@ -59,3 +59,10 @@ def fetch_scatter_df()->pd.DataFrame:
 def fetch_customer_ids() -> list[str]:
     return _get("/customers")
 
+def fetch_customer(customer_id:str) -> dict | None:
+    try:
+        return _get(f"/customer/{customer_id}")
+    except requests.HTTPError as e:
+        if e.response is not None and e.response.status_code == 404:
+            return None
+        raise
