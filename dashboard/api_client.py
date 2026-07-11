@@ -66,3 +66,13 @@ def fetch_customer(customer_id:str) -> dict | None:
         if e.response is not None and e.response.status_code == 404:
             return None
         raise
+
+def call_predict(recency: float, frequency: float, monetory: float) -> dict:
+    return _post(
+        "/predict",
+        {
+            "recency":recency,
+            "Frequency":frequency,
+            "Monetory":monetory
+        }
+    )
