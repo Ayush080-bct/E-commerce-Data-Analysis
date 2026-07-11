@@ -46,3 +46,16 @@ def require_backend():
             "then Reload this page"
             )
         st.stop()
+
+@st.cache_data(ttl=60)
+def fetch_overview() -> dict:
+    return _get("/overview")
+
+@st.cache_data(ttl=60)
+def fetch_scatter_df()->pd.DataFrame:
+    return pd.DataFrame(_get("/cluster/scatter"))
+
+@st.cache_data(ttl=60)
+def fetch_customer_ids() -> list[str]:
+    return _get("/customers")
+
