@@ -55,7 +55,7 @@ def get_customer(customer_id:str,store : DataStore = Depends(get_store)):
     df=store.rfm
     match = df[df["CustomerID"].astype(str) == str(customer_id)]
     if match.empty:
-        return HTTPException(status_code=404, detail="Customer Not found")
+        raise HTTPException(status_code=404, detail="Customer Not found")
     row = match.iloc[0]
     return CustomerResponse(
         CustomerID=str(row["CustomerID"]),
