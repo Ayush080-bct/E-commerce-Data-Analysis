@@ -1,6 +1,13 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from api_client import fetch_overview, fetch_scatter_df, require_backend
+
 
 from api_client import fetch_overview, fetch_scatter_df, require_backend
 
