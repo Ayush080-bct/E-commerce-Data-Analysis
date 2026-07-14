@@ -22,3 +22,22 @@ c1, c2, c3 = st.columns(3)
 recency = c1.slider("Recency (days since last purchase)", r_min, r_max, int(scatter_df["Recency"].median()))
 frequency = c2.slider("Frequency (number of orders)", f_min, f_max, int(scatter_df["Frequency"].median()))
 monetary = c3.slider("Monetary (total spend, £)", m_min, m_max, float(scatter_df["Monetory"].median()))
+
+if st.button("Predict Segment", type="primary"):
+    result = call_predict(recency, frequency, monetary)
+    st.success(
+        f"**Predicted Cluster:** {result['cluster']}  \n"
+        f"**Likely Segment:** {result['segment']}"
+    )
+
+    st.markdown("#### How this compares to existing customers")
+    fig = px.scatter(
+        scatter_df, x="Frequency", y="Monetory", color=scatter_df["Cluster"].astype(str),
+        opacity=0.35,
+    )
+    fig.add_scatter(
+        x=[frequency], y=[monetary],
+        mode="markers", marker=dict(size=18, color="red", symbol="star"),
+        name="New customer",
+    )
+    st.plotly_chart(fig, use_container_width=True)
