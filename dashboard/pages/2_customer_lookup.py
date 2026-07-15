@@ -1,6 +1,9 @@
 import plotly.express as px
 import streamlit as st
- 
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from api_client import fetch_customer, fetch_customer_ids, fetch_scatter_df, require_backend
  
 st.set_page_config(page_title="Customer Lookup", page_icon="🔍", layout="wide")
@@ -21,7 +24,7 @@ if selected_id:
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Recency (days)", int(customer["Recency"]))
         c2.metric("Frequency (orders)", int(customer["Frequency"]))
-        c3.metric("Monetary (£)", f"{customer['Monetary']:,.2f}")
+        c3.metric("Monetary (£)", f"{customer['Monetory']:,.2f}")
         c4.metric("RFM Score", customer["RFM_score"])
  
         c5, c6 = st.columns(2)
@@ -38,7 +41,7 @@ if selected_id:
             opacity=0.4,
         )
         fig.add_scatter(
-            x=[customer["Frequency"]], y=[customer["Monetary"]],
+            x=[customer["Frequency"]], y=[customer["Monetory"]],
             mode="markers", marker=dict(size=16, color="black", symbol="star"),
             name="This customer",
         )

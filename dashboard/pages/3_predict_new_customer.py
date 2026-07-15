@@ -1,6 +1,9 @@
 import plotly.express as px
 import streamlit as st
+import sys
+from pathlib import Path
 
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from api_client import call_predict, fetch_scatter_df, require_backend
 
 st.set_page_config(page_title="Predict New Customer", page_icon="🔮", layout="wide")
