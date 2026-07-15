@@ -63,5 +63,5 @@ with c4:
     st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Segment Summary")
-summary_df = pd.DataFrame(overview["summary"]).sort_values("Avg_Monetary", ascending=False)
+summary_df = pd.DataFrame(overview["summary"]).sort_values("Avg_Monetory", ascending=False)
 st.dataframe(summary_df, use_container_width=True)
