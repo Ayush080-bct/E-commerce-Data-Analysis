@@ -20,6 +20,10 @@ and segment customers using RFM analysis for business decision-making.
 - NumPy
 - Matplotlib
 - Seaborn
+- Scikit-learn (KMeans clustering, StandardScaler)
+- FastAPI (backend API)
+- Streamlit (interactive dashboard)
+- Joblib (model persistence)
 
 ---
 
@@ -123,7 +127,33 @@ Segmentation is based on combined RFM score patterns.
 - Apply KMeans clustering
 - Profile clusters and validate against rule-based segments
 
---- 
+---
+
+## Interactive Dashboard
+
+The segmentation and clustering results are served through a FastAPI
+backend and explored via a Streamlit dashboard, including:
+
+- Segment overview — customer counts, revenue split, cluster visualization
+- Customer lookup — search any `CustomerID` and see their RFM values, score, and cluster
+- Live prediction — enter hypothetical Recency/Frequency/Monetary values and see which segment/cluster they'd fall into
+
+**Run locally** (from the project root, two terminals):
+
+```bash
+pip install -r requirements-dashboard.txt
+
+# terminal 1
+uvicorn backend.main:app --reload
+
+# terminal 2
+streamlit run dashboard/app.py
+```
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the backend and
+frontend are structured.
+
+---
 
 ## Key Business Insights
 - Revenue is driven by a small group of high-value customers
@@ -139,6 +169,7 @@ Segmentation is based on combined RFM score patterns.
 - ✅ RFM Modeling
 - ✅ Customer Segmentation
 - ✅ Visualization & Interpretation
+- ✅ Interactive Dashboard (FastAPI + Streamlit)
 
 ---
 
@@ -146,4 +177,4 @@ Segmentation is based on combined RFM score patterns.
 - Return-heavy customer risk analysis
 - Churn prediction modeling
 - Advanced clustering (DBSCAN / Hierarchical)
-- Interactive dashboard for business users
+- Deploy the dashboard publicly (Render/Railway backend + Streamlit Community Cloud frontend)
