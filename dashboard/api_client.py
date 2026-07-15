@@ -12,13 +12,13 @@ API_BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:8000")
 
 def _get(path:str, **kwargs):
     """Send a GET request to the backend and return the JSON response."""
-    r = requests.get(f"{API_BASE_URL}",timeout=10,**kwargs)
+    r = requests.get(f"{API_BASE_URL}{path}", timeout=10, **kwargs)
     r.raise_for_status()
     return r.json()
 
 def _post(path:str,json_body:dict):
     """ Send a POST request to the backend with a JSON body and return the JSON response."""
-    r = requests.post(f"{API_BASE_URL}",json=json_body,timeout=10)
+    r = requests.post(f"{API_BASE_URL}{path}", json=json_body, timeout=10)
     r.raise_for_status()
     return r.json()
 
@@ -38,7 +38,7 @@ def require_backend():
     """
     Call at the top of the every page. Stops the page with clear error if backend isnot reachable, instead of letting
     requests fail deep inside the page logic."""
-    if not check_backend_alive:
+    if not check_backend_alive():
         st.error(
             f"can't reach the backend API at `{API_BASE_URL}`.\n\n"\
             "start it first with:\n\n"
@@ -61,7 +61,7 @@ def fetch_customer_ids() -> list[str]:
 
 def fetch_customer(customer_id:str) -> dict | None:
     try:
-        return _get(f"/customer/{customer_id}")
+        return _get(f"/customers/{customer_id}")
     except requests.HTTPError as e:
         if e.response is not None and e.response.status_code == 404:
             return None
@@ -72,7 +72,7 @@ def call_predict(recency: float, frequency: float, monetory: float) -> dict:
         "/predict",
         {
             "recency":recency,
-            "Frequency":frequency,
-            "Monetory":monetory
+            "frequency":frequency,
+            "monetory":monetory
         }
     )
