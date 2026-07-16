@@ -9,7 +9,6 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 from api_client import fetch_overview, fetch_scatter_df, require_backend
 
 
-from api_client import fetch_overview, fetch_scatter_df, require_backend
 
 st.set_page_config(page_title="Overview", page_icon="📈", layout="wide")
 require_backend()
