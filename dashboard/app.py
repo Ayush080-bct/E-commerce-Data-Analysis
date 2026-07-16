@@ -29,3 +29,19 @@ st.write(
  
 st.markdown("### Pages")
 c1, c2, c3 = st.columns(3)
+ 
+with c1:
+    st.markdown("#### 📈 Overview")
+    st.write("Segment counts, revenue split, and cluster visualization.")
+    st.page_link("pages/1_overview.py", label="Go to Overview", icon="📈")
+ 
+
+with c2:
+    st.markdown("#### 🔍 Customer Lookup")
+    st.write("Look up any customer's RFM values, score, and cluster.")
+    st.page_link("pages/2_customer_lookup.py", label="Go to Customer Lookup", icon="🔍")
+ 
+with c3:
+    st.markdown("#### 🔮 Predict New Customer")
+    st.write("Enter hypothetical RFM values and predict the segment live.")
+    st.page_link("pages/3_predict_new_customer.py", label="Go to Prediction", icon="🔮")
