@@ -5,4 +5,22 @@
 
 # Python cache
 __pycache__/
+*.pyc
+*.pyo
+*.egg-info/
 
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+.streamlit/secrets.toml
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
