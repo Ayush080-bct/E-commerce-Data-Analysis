@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+.git/
+.gitignore
+notebook/
+docs/
+*.ipynb
+.streamlit/secrets.toml
+.DS_Store
+ 
