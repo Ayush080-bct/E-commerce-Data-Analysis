@@ -1,21 +1,21 @@
 services:
   backend:
-    build: 
-      context:
+    build:
+      context: .
       dockerfile: backend/Dockerfile
     ports:
-      -"8000:8000"
+      - "8000:8000"
     volumes:
-      -./data:/app/data
-      -./models:/app/models
+      - ./data:/app/data
+      - ./models:/app/models
     restart: unless-stopped
-  
+
   dashboard:
-    build: 
-      context: 
+    build:
+      context: .
       dockerfile: dashboard/Dockerfile
     ports:
-      -"8501:8501"
+      - "8501:8501"
     environment:
       # "backend" here is the service name above — Docker's internal DNS
       # resolves it to the backend container's IP. localhost would NOT work
