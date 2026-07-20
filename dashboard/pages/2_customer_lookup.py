@@ -1,19 +1,20 @@
-import plotly.express as px
-import streamlit as st
+
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
+import plotly.express as px
+import streamlit as st
+
 from api_client import fetch_customer, fetch_customer_ids, fetch_scatter_df, require_backend
- 
+
 st.set_page_config(page_title="Customer Lookup", page_icon="🔍", layout="wide")
 require_backend()
- 
+
 st.title("Customer Lookup")
- 
+
 ids = fetch_customer_ids()
 selected_id = st.selectbox("Search by Customer ID", options=ids)
- 
 
 if selected_id:
     customer = fetch_customer(selected_id)
@@ -26,14 +27,14 @@ if selected_id:
         c2.metric("Frequency (orders)", int(customer["Frequency"]))
         c3.metric("Monetary (£)", f"{customer['Monetory']:,.2f}")
         c4.metric("RFM Score", customer["RFM_score"])
- 
+
         c5, c6 = st.columns(2)
         c5.info(f"**Rule-based segment:** {customer['segment']}")
         c6.info(
             f"**KMeans cluster:** {customer['cluster']} "
             f"(typically '{customer['cluster_typical_segment']}')"
         )
- 
+
         st.markdown("#### Where this customer sits vs. everyone else")
         scatter_df = fetch_scatter_df()
         fig = px.scatter(
@@ -45,4 +46,4 @@ if selected_id:
             mode="markers", marker=dict(size=16, color="black", symbol="star"),
             name="This customer",
         )
-        st.plotly_chart(fig, use_container_width=True) 
+        st.plotly_chart(fig, width='stretch')

@@ -1,14 +1,12 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from api_client import fetch_overview, fetch_scatter_df, require_backend
-
-
 
 st.set_page_config(page_title="Overview", page_icon="📈", layout="wide")
 require_backend()
@@ -34,7 +32,7 @@ with c1:
     )
     fig = px.bar(seg_counts, x="segment", y="count", color="segment", text="count")
     fig.update_layout(showlegend=False, xaxis_title="", yaxis_title="Customers")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 with c2:
     st.subheader("Revenue by Segment")
@@ -42,7 +40,7 @@ with c2:
         list(overview["revenue_by_segment"].items()), columns=["segment", "revenue"]
     )
     fig = px.pie(rev, names="segment", values="revenue", hole=0.4)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 st.markdown("---")
 c3, c4 = st.columns(2)
@@ -54,13 +52,13 @@ with c3:
         hover_data=["CustomerID", "Recency", "segment"],
         labels={"color": "Cluster"},
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 with c4:
     st.subheader("Recency Distribution")
     fig = px.histogram(scatter_df, x="Recency", nbins=30, color="segment")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 st.subheader("Segment Summary")
 summary_df = pd.DataFrame(overview["summary"]).sort_values("Avg_Monetory", ascending=False)
-st.dataframe(summary_df, use_container_width=True)
+st.dataframe(summary_df, width='stretch')
