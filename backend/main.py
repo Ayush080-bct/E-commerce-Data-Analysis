@@ -7,8 +7,8 @@ Customer segementation API
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 
-from routes import router
-from store import store
+from backend.routes import router
+from backend.store import store
 
 app = FastAPI(title="Customer Segementation API",version="1.0.0")
 

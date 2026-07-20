@@ -1,7 +1,7 @@
 import pandas as pd
 from fastapi import APIRouter, Depends, HTTPException
-from store import DataStore,get_store
-from schemas import (
+from backend.store import DataStore,get_store
+from backend.schemas import (
     CustomerResponse,
     OverviewResponse,
     PredictRequest,
