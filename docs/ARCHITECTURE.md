@@ -128,6 +128,7 @@ functionally. The split exists to:
 
 ## Running locally
 
+**Manual (two terminals):**
 ```bash
 pip install -r requirements-dashboard.txt
 
@@ -138,8 +139,25 @@ uvicorn backend.main:app --reload
 streamlit run dashboard/app.py
 ```
 
-## Deployment (planned)
+**Docker (single command, both services):**
+```bash
+docker compose up --build
+```
+- Backend: http://localhost:8000/docs
+- Dashboard: http://localhost:8501
 
-- **Backend** → Render or Railway (free tier)
-- **Frontend** → Streamlit Community Cloud, with `API_BASE_URL` set as an
-  environment variable pointing at the deployed backend URL
+Docker Compose builds `backend/Dockerfile` and `dashboard/Dockerfile`, wires
+the two containers together on an internal network, and sets
+`API_BASE_URL=http://backend:8000` on the dashboard container automatically
+(`localhost` would not work here — see `docker-compose.yml` comments for why).
+`data/` and `models/` are mounted as volumes so updated files are picked up
+without rebuilding the image (though the backend still only loads them once,
+at startup — restart the container to pick up new data).
+
+## Deployment
+
+- **Backend** → deployed on Render (Docker environment, built directly from
+  `backend/Dockerfile`)
+- **Frontend** → Streamlit Community Cloud, with `API_BASE_URL` set as a
+  secret pointing at the deployed Render backend URL (Streamlit Cloud builds
+  from `requirements.txt` at the repo root — it does not use the Dockerfiles)
