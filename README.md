@@ -1,5 +1,7 @@
 # E-commerce Data Analysis
 
+📄 [Architecture](docs/ARCHITECTURE.md) — system design, folder structure, and how to run the dashboard
+
 ## Overview
 This project analyzes real-world e-commerce transaction data using Python.
 The goal is to understand customer purchasing behavior, identify key revenue drivers,
@@ -149,6 +151,14 @@ uvicorn backend.main:app --reload
 # terminal 2
 streamlit run dashboard/app.py
 ```
+
+**Or with Docker** (single command, both services):
+
+```bash
+docker compose up --build
+```
+- Backend: http://localhost:8000/docs
+- Dashboard: http://localhost:8501
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the backend and
 frontend are structured.
